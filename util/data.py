@@ -5,12 +5,9 @@ import cv2
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
-from torchvision.transforms import InterpolationMode
 
 from util.config import inp_shape
 from util.edges import get_edges
-import numpy as np
-
 from util.tools import skel
 
 
@@ -18,7 +15,7 @@ class PixToPixDataset(Dataset):
     def __init__(self, root_dir, edges_dir=None):
         self.root_dir = root_dir
         self.edges_dir = edges_dir
-        self.list_files = os.listdir(self.root_dir)
+        self.list_files = os.listdir(self.root_dir)[0:200]
 
     def __len__(self):
         return len(self.list_files)
