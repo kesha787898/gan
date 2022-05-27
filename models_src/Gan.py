@@ -13,12 +13,13 @@ from util import config
 from util.config import inp_shape
 from util.tools import skel
 
+
 class GAN(LightningModule):
     def __init__(self):
         super().__init__()
 
-        self.generator = UnetGenerator(1, 3, 3, ngf=12)
-        self.discriminator = NLayerDiscriminator(4, ndf=36,n_layers=3)
+        self.generator = UnetGenerator(1, 3, num_downs=3, ngf=12)
+        self.discriminator = NLayerDiscriminator(4, ndf=36, n_layers=3)
         print(self.generator)
         print(self.discriminator)
         self.loss = torch.nn.BCELoss()
@@ -130,6 +131,6 @@ class GAN(LightningModule):
         opt_d = torch.optim.SGD(self.discriminator.parameters(), lr=lr_d, weight_decay=3e-3)
 
         return [opt_g,
-                opt_d]#, \
-               #[torch.optim.lr_scheduler.CosineAnnealingLR(opt_g, 50),
-                #torch.optim.lr_scheduler.CosineAnnealingLR(opt_d, 50)]
+                opt_d]  # , \
+        # [torch.optim.lr_scheduler.CosineAnnealingLR(opt_g, 50),
+        # torch.optim.lr_scheduler.CosineAnnealingLR(opt_d, 50)]
